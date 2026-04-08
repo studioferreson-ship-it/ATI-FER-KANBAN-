@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: tasks
+    // Document ID: {taskId}
+    // Fields:
+    //   - title: string (required, max 100 chars)
+    //   - desc: string (optional, max 1000 chars)
+    //   - date: string (optional, ISO format)
+    //   - priorityBase: string (required, enum: Normal, Urgente, Imediato)
+    //   - columnId: number (required, 0-3)
+    //   - order: number (required)
+    //   - userId: string (required, matches auth.uid)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidTask(data) {
+      return data.keys().hasAll(['title', 'columnId', 'userId', 'priorityBase', 'order']) &&
+             data.title is string && data.title.size() <= 100 &&
+             (!('desc' in data) || (data.desc is string && data.desc.size() <= 1000)) &&
+             (!('date' in data) || (data.date is string && data.date.size() <= 50)) &&
+             data.priorityBase in ['Normal', 'Urgente', 'Imediato'] &&
+             data.columnId is number && data.columnId >= 0 && data.columnId <= 3 &&
+             data.order is number &&
+             data.userId == request.auth.uid;
+    }
+
+    match /tasks/{taskId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && isValidTask(request.resource.data);
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid && isValidTask(request.resource.data);
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+  }
+}

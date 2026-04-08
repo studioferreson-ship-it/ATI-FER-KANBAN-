@@ -1,0 +1,5 @@
+{
+  "name": "ATI-FER (KanBan)",
+  "description": "Gerenciador de tarefas Kanban totalmente funcional com persistência em banco de dados.",
+  "requestFramePermissions": []
+}

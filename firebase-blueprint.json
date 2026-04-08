@@ -1,0 +1,25 @@
+{
+  "entities": {
+    "Task": {
+      "title": "Task",
+      "description": "A task in the Kanban board",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Title of the task" },
+        "desc": { "type": "string", "description": "Description of the task" },
+        "date": { "type": "string", "description": "Due date in ISO format" },
+        "priorityBase": { "type": "string", "enum": ["Normal", "Urgente", "Imediato"], "description": "Base priority" },
+        "columnId": { "type": "number", "description": "The ID of the column (0-3)" },
+        "order": { "type": "number", "description": "Order within the column" },
+        "userId": { "type": "string", "description": "The UID of the owner" }
+      },
+      "required": ["title", "columnId", "userId"]
+    }
+  },
+  "firestore": {
+    "/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Collection of tasks"
+    }
+  }
+}
