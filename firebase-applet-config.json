@@ -1,10 +1,10 @@
 {
-  "projectId": "gen-lang-client-0897338544",
-  "appId": "1:64841070730:web:a043666049c996e8ff5573",
-  "apiKey": "AIzaSyAVQLMoZy-AuSBZTmmuvCWs9K02Urm8qgU",
-  "authDomain": "gen-lang-client-0897338544.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-cfbec6d0-90b9-4394-9529-2f2fb773d328",
-  "storageBucket": "gen-lang-client-0897338544.firebasestorage.app",
-  "messagingSenderId": "64841070730",
+  "projectId": "kanban-oficial",
+  "appId": "1:846518130579:web:3992975994a803507b3a66",
+  "apiKey": "AIzaSyAIYBjaotK_VzszCqPnFajdyFX9elUp75I",
+  "authDomain": "kanban-oficial.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "kanban-oficial.firebasestorage.app",
+  "messagingSenderId": "846518130579",
   "measurementId": ""
 }
